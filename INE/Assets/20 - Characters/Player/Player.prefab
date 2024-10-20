@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1629194792359312628}
-  projectile01: {fileID: 17273363667562199, guid: 16fe534faa9361a46a74cc88f67b93d7, type: 3}
+  weapon: {fileID: 11400000, guid: 60852dc901a3fcb4a822920b54c4e1d6, type: 2}
 --- !u!143 &5887113813219051420
 CharacterController:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerCntrl : MonoBehaviour
 {
     [SerializeField] private Transform firePoint;
-    [SerializeField] private GameObject projectile01;
+    [SerializeField] private WeaponSO weapon;
 
     private CharacterController charCntrl;
     private Animator animator;
@@ -26,6 +26,8 @@ public class PlayerCntrl : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
 
         animator.SetFloat("speed", 0.0f);
+
+        direction = transform.forward;
     }
 
     // Update is called once per frame
@@ -49,14 +51,17 @@ public class PlayerCntrl : MonoBehaviour
 
                 direction = (target - transform.position).normalized;
 
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                Quaternion playerRotation = targetRotation;
-                //Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, 25.0f * dt);
-                transform.localRotation = playerRotation;
+                if (direction.magnitude > 0.1f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+                    Quaternion playerRotation = targetRotation;
+                    //Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, 25.0f * dt);
+                    transform.localRotation = playerRotation;
 
-                transform.Translate(transform.forward * speed * throttle * dt, Space.World);
+                    transform.Translate(transform.forward * speed * throttle * dt, Space.World);
 
-                animator.SetFloat("speed", 1.3f);
+                    animator.SetFloat("speed", 1.3f);
+                }
             }
         } else
         {
@@ -74,36 +79,35 @@ public class PlayerCntrl : MonoBehaviour
     {
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            Debug.Log("Fire 1 ... Start");
-            GameObject go = Instantiate(projectile01, firePoint.transform.position, Quaternion.identity);
-            go.GetComponentInChildren<Rigidbody>().AddForce(direction * 100.0f, ForceMode.Impulse);
+            GameObject go = Instantiate(weapon.prefab, firePoint.transform.position, Quaternion.identity);
+            go.GetComponentInChildren<Rigidbody>().AddForce(direction * 90.0f, ForceMode.Impulse);
             Debug.DrawLine(firePoint.transform.position, firePoint.transform.position + direction * 10.0f, Color.red) ;
             Destroy(go, 2.0f);
         }
 
         if (Keyboard.current.digit1Key.wasReleasedThisFrame)
         {
-            Debug.Log("Fire 1 ... Canceled");
+           
         }
 
         if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
-            Debug.Log("Fire 2 ... Start");
+            //Debug.Log("Fire 2 ... Start");
         }
 
         if (Keyboard.current.digit2Key.wasReleasedThisFrame)
         {
-            Debug.Log("Fire 2 ... Canceled");
+            //Debug.Log("Fire 2 ... Canceled");
         }
 
         if (Keyboard.current.digit3Key.wasPressedThisFrame)
         {
-            Debug.Log("Fire 3 ... Start");
+            //Debug.Log("Fire 3 ... Start");
         }
 
         if (Keyboard.current.digit3Key.wasReleasedThisFrame)
         {
-            Debug.Log("Fire 3 ... Canceled");
+            //Debug.Log("Fire 3 ... Canceled");
         }
     }
 }
