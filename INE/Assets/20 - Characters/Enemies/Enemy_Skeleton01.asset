@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Enemy_Skeleton01
   m_EditorClassIdentifier: 
   prefab: {fileID: 4469960368469968848, guid: c4fdd3473a09b5646b19a8908b648d24, type: 3}
-  health: 0
+  spawnPrefab: {fileID: 4937174437692674392, guid: 97dbf94517852fa4393c43ebd50d76d6, type: 3}
+  health: 30

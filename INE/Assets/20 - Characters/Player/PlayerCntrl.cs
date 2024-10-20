@@ -49,10 +49,9 @@ public class PlayerCntrl : MonoBehaviour
             {
                 target = new Vector3(hit.point.x, 0.0f, hit.point.z);
 
-                direction = (target - transform.position).normalized;
-
-                if (direction.magnitude > 0.1f)
+                if (Vector3.Distance(transform.position, target) > 0.3f)
                 {
+                    direction = (target - transform.position).normalized;
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
                     Quaternion playerRotation = targetRotation;
                     //Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, 25.0f * dt);
@@ -61,6 +60,9 @@ public class PlayerCntrl : MonoBehaviour
                     transform.Translate(transform.forward * speed * throttle * dt, Space.World);
 
                     animator.SetFloat("speed", 1.3f);
+                } else
+                {
+                    animator.SetFloat("speed", 0.0f);
                 }
             }
         } else
