@@ -59,7 +59,7 @@ public class PlayerCntrl : MonoBehaviour
 
                     transform.Translate(transform.forward * speed * throttle * dt, Space.World);
 
-                    animator.SetFloat("speed", 1.3f);
+                    animator.SetFloat("speed", 0.9f);
                 } else
                 {
                     animator.SetFloat("speed", 0.0f);

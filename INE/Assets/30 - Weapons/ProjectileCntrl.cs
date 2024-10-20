@@ -11,6 +11,7 @@ public class ProjectileCntrl : MonoBehaviour
             if (takeDamage.TakeDamage(10.0f))
             {
                 Destroy(other.gameObject);
+                EventManager.Instance.InokeOnEnemyDestroy();
             }
 
             Destroy(gameObject);

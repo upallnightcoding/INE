@@ -12,13 +12,18 @@ public class EnemyManager : MonoBehaviour
     {
         //SpawnOneEnemy(testEnemy, new Vector3(3.0f, 0.0f, 0.0f));
 
-        SpawnTwoEnemies(testEnemy, testEnemy);
+        SpawnOneEnemy(testEnemy, new Vector3(5.0f, 0.0f, 0.0f));
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void Spawn()
+    {
+        SpawnTwoEnemies(testEnemy, testEnemy);
     }
 
     private void SpawnTwoEnemies(EnemySO left, EnemySO right)
@@ -28,6 +33,7 @@ public class EnemyManager : MonoBehaviour
         Vector3 direction = (new Vector3(u, 0.0f, w)).normalized;
 
         Vector3 playerPos = player.transform.position;
+        Debug.Log($"Player Pos: {playerPos}");
 
         Vector3 leftPos = playerPos + direction * 5.0f;
         Vector3 rightPos = playerPos + direction * -5.0f;
@@ -44,5 +50,15 @@ public class EnemyManager : MonoBehaviour
         }
 
         GameObject go = Instantiate(enemy.prefab, position, Quaternion.identity);
+    }
+
+    private void OnEnable()
+    {
+        EventManager.Instance.OnEnemyDestroy += Spawn;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.OnEnemyDestroy -= Spawn;
     }
 }
