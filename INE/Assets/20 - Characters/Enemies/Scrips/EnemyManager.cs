@@ -6,12 +6,11 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private EnemySO testEnemy;
+    [SerializeField] private GameData gameData;
 
     // Start is called before the first frame update
     void Start()
     {
-        //SpawnOneEnemy(testEnemy, new Vector3(3.0f, 0.0f, 0.0f));
-
         SpawnOneEnemy(testEnemy, new Vector3(5.0f, 0.0f, 0.0f));
     }
 
@@ -33,13 +32,22 @@ public class EnemyManager : MonoBehaviour
         Vector3 direction = (new Vector3(u, 0.0f, w)).normalized;
 
         Vector3 playerPos = player.transform.position;
-        Debug.Log($"Player Pos: {playerPos}");
 
         Vector3 leftPos = playerPos + direction * 5.0f;
         Vector3 rightPos = playerPos + direction * -5.0f;
 
-        SpawnOneEnemy(testEnemy, leftPos);
-        SpawnOneEnemy(testEnemy, rightPos);
+        SpawnOneEnemy(PickEnemy(), leftPos);
+        SpawnOneEnemy(PickEnemy(), rightPos);
+    }
+
+    /**
+     * PickEnemy() - 
+     */
+    private EnemySO PickEnemy()
+    {
+        int choice = Random.Range(0, gameData.enemy.Length);
+
+        return (gameData.enemy[choice]);
     }
 
     private void SpawnOneEnemy(EnemySO enemy, Vector3 position)

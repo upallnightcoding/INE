@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42216a65f13a1f04cac4798ec80d4270, type: 3}
-  m_Name: Enemy_Skeleton01
+  m_Name: Enemy_Skeleton02
   m_EditorClassIdentifier: 
-  enemyName: Skeleton 1
-  prefab: {fileID: 4469960368469968848, guid: c4fdd3473a09b5646b19a8908b648d24, type: 3}
+  enemyName: Skeleton 2
+  prefab: {fileID: 4862036079709523068, guid: 38e112ab41c6b0c47a657b29d0cf1753, type: 3}
   spawnPrefab: {fileID: 4937174437692674392, guid: 97dbf94517852fa4393c43ebd50d76d6, type: 3}
   health: 30

@@ -13,8 +13,8 @@ public class ProjectileCntrl : MonoBehaviour
                 Destroy(other.gameObject);
                 EventManager.Instance.InokeOnEnemyDestroy();
             }
-
-            Destroy(gameObject);
         }
+
+        Destroy(gameObject);
     }
 }
