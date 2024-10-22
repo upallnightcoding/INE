@@ -21,6 +21,8 @@ public class PlayerCntrl : MonoBehaviour
     private Vector3 moveDirection;
     private Vector3 target;
 
+    private WeaponSO holdWeapon;
+
     private PlayerState playerState = PlayerState.FIRING;
 
     // Start is called before the first frame update
@@ -45,14 +47,19 @@ public class PlayerCntrl : MonoBehaviour
                 CheckFireWeapon();
                 break;
             case PlayerState.PICK_WEAPON_SLOT:
+                playerState = PickWeaponSlot();
                 break;
-            case PlayerState.DROP_WEAPON:
+            case PlayerState.KEY1:
+            case PlayerState.KEY2:
+            case PlayerState.KEY3:
+                playerState = DropWeapon(playerState);
                 break;
         }
     }
 
     public void Pickup(WeaponSO weapon)
     {
+        holdWeapon = weapon;
         playerState = PlayerState.PICK_WEAPON_SLOT;
     }
 
@@ -100,15 +107,28 @@ public class PlayerCntrl : MonoBehaviour
     /*** Firing Weapon ***/
     /*********************/
 
+    private PlayerState DropWeapon(PlayerState state)
+    {
+        switch(state)
+        {
+            case PlayerState.KEY1:
+                break;
+            case PlayerState.KEY2:
+                break;
+            case PlayerState.KEY3:
+                break;
+        }
+
+        return (PlayerState.FIRING);
+    }
+
     private PlayerState PickWeaponSlot()
     {
         PlayerState state = PlayerState.PICK_WEAPON_SLOT;
 
-        if (Keyboard.current.digit1Key.wasPressedThisFrame) StartFiring(0);
-
-        if (Keyboard.current.digit2Key.wasPressedThisFrame) StartFiring(1);
-
-        if (Keyboard.current.digit3Key.wasPressedThisFrame) StartFiring(2);
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) state = PlayerState.KEY1;
+        if (Keyboard.current.digit2Key.wasPressedThisFrame) state = PlayerState.KEY2;
+        if (Keyboard.current.digit3Key.wasPressedThisFrame) state = PlayerState.KEY3;
 
         return (state);
     }
@@ -120,8 +140,6 @@ public class PlayerCntrl : MonoBehaviour
             GameObject go = Instantiate(weapon.prefab, firePoint.transform.position, Quaternion.identity);
             go.GetComponentInChildren<Rigidbody>().AddForce(direction * 90.0f, ForceMode.Impulse);
             Destroy(go, 2.0f);
-
-            StartFiring(1);
         }
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame) StartFiring(0);
@@ -157,7 +175,9 @@ public class PlayerCntrl : MonoBehaviour
     {
         FIRING,
         PICK_WEAPON_SLOT,
-        DROP_WEAPON
+        KEY1,
+        KEY2,
+        KEY3
     }
 }
 
