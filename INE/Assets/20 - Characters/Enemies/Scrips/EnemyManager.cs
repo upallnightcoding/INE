@@ -11,7 +11,7 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnOneEnemy(testEnemy, new Vector3(5.0f, 0.0f, 0.0f));
+        //SpawnOneEnemy(testEnemy, new Vector3(5.0f, 0.0f, 0.0f));
     }
 
     // Update is called once per frame

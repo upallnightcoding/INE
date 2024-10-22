@@ -18,3 +18,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3696f5cd73d54f0419dd32929a707d8c, type: 2}
   - {fileID: 11400000, guid: ff2e6133ca8f2da4bbbb81d8717eebd9, type: 2}
   - {fileID: 11400000, guid: f66ca1ac029cab647a4f06605664c41b, type: 2}
+  weaponsSpinning: 40

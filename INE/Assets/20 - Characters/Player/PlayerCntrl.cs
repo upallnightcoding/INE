@@ -9,6 +9,8 @@ public class PlayerCntrl : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private WeaponSO weapon;
 
+    private WeaponStatus[] weaponStatus = new WeaponStatus[3];
+
     private CharacterController charCntrl;
     private Animator animator;
 
@@ -18,6 +20,8 @@ public class PlayerCntrl : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 moveDirection;
     private Vector3 target;
+
+    private PlayerState playerState = PlayerState.FIRING;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +38,22 @@ public class PlayerCntrl : MonoBehaviour
     void Update()
     {
         ClickAndMove(Time.deltaTime);
-        FireKey();
+
+        switch(playerState)
+        {
+            case PlayerState.FIRING:
+                CheckFireWeapon();
+                break;
+            case PlayerState.PICK_WEAPON_SLOT:
+                break;
+            case PlayerState.DROP_WEAPON:
+                break;
+        }
+    }
+
+    public void Pickup(WeaponSO weapon)
+    {
+        playerState = PlayerState.PICK_WEAPON_SLOT;
     }
 
     private void ClickAndMove(float dt)
@@ -77,39 +96,68 @@ public class PlayerCntrl : MonoBehaviour
         }
     }
 
-    private void FireKey()
+    /*********************/
+    /*** Firing Weapon ***/
+    /*********************/
+
+    private PlayerState PickWeaponSlot()
+    {
+        PlayerState state = PlayerState.PICK_WEAPON_SLOT;
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) StartFiring(0);
+
+        if (Keyboard.current.digit2Key.wasPressedThisFrame) StartFiring(1);
+
+        if (Keyboard.current.digit3Key.wasPressedThisFrame) StartFiring(2);
+
+        return (state);
+    }
+
+    private void CheckFireWeapon()
     {
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             GameObject go = Instantiate(weapon.prefab, firePoint.transform.position, Quaternion.identity);
             go.GetComponentInChildren<Rigidbody>().AddForce(direction * 90.0f, ForceMode.Impulse);
-            Debug.DrawLine(firePoint.transform.position, firePoint.transform.position + direction * 10.0f, Color.red) ;
             Destroy(go, 2.0f);
+
+            StartFiring(1);
         }
 
-        if (Keyboard.current.digit1Key.wasReleasedThisFrame)
-        {
-           
-        }
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) StartFiring(0);
+        if (Keyboard.current.digit1Key.wasReleasedThisFrame) StopFiring(0);
 
-        if (Keyboard.current.digit2Key.wasPressedThisFrame)
-        {
-            //Debug.Log("Fire 2 ... Start");
-        }
+        if (Keyboard.current.digit2Key.wasPressedThisFrame) StartFiring(1);
+        if (Keyboard.current.digit2Key.wasReleasedThisFrame) StopFiring(1);
 
-        if (Keyboard.current.digit2Key.wasReleasedThisFrame)
-        {
-            //Debug.Log("Fire 2 ... Canceled");
-        }
+        if (Keyboard.current.digit3Key.wasPressedThisFrame) StartFiring(2);
+        if (Keyboard.current.digit3Key.wasReleasedThisFrame) StopFiring(2);
+    }
 
-        if (Keyboard.current.digit3Key.wasPressedThisFrame)
-        {
-            //Debug.Log("Fire 3 ... Start");
-        }
+    private void StartFiring(int weaponIndex)
+    {
 
-        if (Keyboard.current.digit3Key.wasReleasedThisFrame)
-        {
-            //Debug.Log("Fire 3 ... Canceled");
-        }
+    }
+
+    private void StopFiring(int weaponIndex)
+    {
+
+    }
+
+    public class WeaponStatus
+    {
+        private bool weaponSet = false;
+        private bool isFiring;
+        private bool endAutomatic;
+        private int maxRounds;
+        private int rounds;
+    }
+
+    public enum PlayerState
+    {
+        FIRING,
+        PICK_WEAPON_SLOT,
+        DROP_WEAPON
     }
 }
+
