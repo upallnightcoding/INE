@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Projectile 01
   prefab: {fileID: 17273363667562199, guid: 16fe534faa9361a46a74cc88f67b93d7, type: 3}
+  manual: 1
   force: 80
   damage: 10
+  maxRounds: 10
+  reloadSec: 2
+  roundsPerSec: 5
+  destroyTiming: 2

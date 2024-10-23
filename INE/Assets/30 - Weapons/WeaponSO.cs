@@ -9,7 +9,17 @@ public class WeaponSO : ScriptableObject
 
     public GameObject prefab;
 
+    public bool manual = true;
+
     public float force;
 
     public float damage;
+
+    public int maxRounds;
+
+    public float reloadSec;
+
+    public float roundsPerSec;
+
+    public float destroyTiming;
 }

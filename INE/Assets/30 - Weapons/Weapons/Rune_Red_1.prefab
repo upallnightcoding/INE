@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameData: {fileID: 11400000, guid: a85423c8ce127e04ab76123026d1f923, type: 2}
-  weapon: {fileID: 0}
+  weapon: {fileID: 11400000, guid: 60852dc901a3fcb4a822920b54c4e1d6, type: 2}
 --- !u!65 &1032837038698834736
 BoxCollider:
   m_ObjectHideFlags: 0

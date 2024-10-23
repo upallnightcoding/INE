@@ -6,7 +6,10 @@ using System;
 public class EventManager 
 {
     public event Action OnEnemyDestroy = delegate { };
-    public void InokeOnEnemyDestroy() => OnEnemyDestroy.Invoke();
+    public void InvokeOnEnemyDestroy() => OnEnemyDestroy.Invoke();
+
+    public event Action<WeaponSO> OnRuneTrigger = delegate { };
+    public void InvokeOnRuneTrigger(WeaponSO weapon) => OnRuneTrigger.Invoke(weapon);
 
     // Event Manager Singleton
     //------------------------

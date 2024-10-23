@@ -6,15 +6,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerCntrl : MonoBehaviour
 {
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform muzzlePoint;
     [SerializeField] private WeaponSO weapon;
 
-    private WeaponStatus[] weaponStatus = new WeaponStatus[3];
+    private WeaponSlot[] weaponSlot = new WeaponSlot[3];
 
     private CharacterController charCntrl;
     private Animator animator;
 
-    private float playerSpeed = 5.0f;
     private Vector3 direction;
 
     private Vector2 moveInput;
@@ -34,6 +33,11 @@ public class PlayerCntrl : MonoBehaviour
         animator.SetFloat("speed", 0.0f);
 
         direction = transform.forward;
+
+        for (int i = 0; i < weaponSlot.Length; i++)
+        {
+            weaponSlot[i] = new WeaponSlot();
+        }
     }
 
     // Update is called once per frame
@@ -112,14 +116,23 @@ public class PlayerCntrl : MonoBehaviour
         switch(state)
         {
             case PlayerState.KEY1:
+                SetNewWeapon(0);
                 break;
             case PlayerState.KEY2:
+                SetNewWeapon(1);
                 break;
             case PlayerState.KEY3:
+                SetNewWeapon(2);
                 break;
         }
 
         return (PlayerState.FIRING);
+    }
+
+    private void SetNewWeapon(int slot)
+    {
+        weaponSlot[slot].Set(holdWeapon);
+        Debug.Log($"Drop Weapon Slot: {slot}");
     }
 
     private PlayerState PickWeaponSlot()
@@ -135,40 +148,138 @@ public class PlayerCntrl : MonoBehaviour
 
     private void CheckFireWeapon()
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        /*if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             GameObject go = Instantiate(weapon.prefab, firePoint.transform.position, Quaternion.identity);
             go.GetComponentInChildren<Rigidbody>().AddForce(direction * 90.0f, ForceMode.Impulse);
             Destroy(go, 2.0f);
+        }*/
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) StartCoroutine(StartFiring(weaponSlot[0]));
+        if (Keyboard.current.digit1Key.wasReleasedThisFrame) StopFiring(weaponSlot[0]);
+
+        if (Keyboard.current.digit2Key.wasPressedThisFrame) StartCoroutine(StartFiring(weaponSlot[1]));
+        if (Keyboard.current.digit2Key.wasReleasedThisFrame) StopFiring(weaponSlot[1]);
+
+        if (Keyboard.current.digit3Key.wasPressedThisFrame) StartCoroutine(StartFiring(weaponSlot[2]));
+        if (Keyboard.current.digit3Key.wasReleasedThisFrame) StopFiring(weaponSlot[2]);
+    }
+
+    private IEnumerator StartFiring(WeaponSlot weaponSlot)
+    {
+        if (weaponSlot != null && weaponSlot.DoesSlotHaveWeapon && !weaponSlot.IsFiring)
+        {
+            weaponSlot.InitializeFiring();
+
+            bool firstShot = true;
+            float timeBetweenRounds = 1.0f / weapon.roundsPerSec;
+
+            while (weaponSlot.CanFire(firstShot))
+            {
+                weaponSlot.FireWeapon(muzzlePoint.position, transform.forward);
+
+                yield return new WaitForSeconds(timeBetweenRounds);
+
+                firstShot = false;
+            }
+
+            if (weaponSlot.IsWeaponEmpty())
+            {
+                yield return new WaitForSeconds(weaponSlot.GetReloadTime());
+                weaponSlot.Reload();
+            }
+
+            weaponSlot.EndFiring();
+        }
+    }
+
+    private void StopFiring(WeaponSlot weaponSlot)
+    {
+        if (weaponSlot != null && weaponSlot.DoesSlotHaveWeapon)
+        {
+            weaponSlot.StopAutomaticFiring();
+        }
+    }
+
+    private void OnEnable()
+    {
+        EventManager.Instance.OnRuneTrigger += Pickup;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.OnRuneTrigger -= Pickup;
+    }
+
+    /************************/
+    /*** External Classes ***/
+    /************************/
+
+    public class WeaponSlot
+    {
+        private WeaponSO weapon;
+
+        public bool DoesSlotHaveWeapon { get; set; } = false;
+        public bool IsFiring { get; set; } = false;
+        public bool EndAutomatic { get; set; } = true;
+
+        private int rounds;
+
+        public WeaponSlot()
+        {
+
         }
 
-        if (Keyboard.current.digit1Key.wasPressedThisFrame) StartFiring(0);
-        if (Keyboard.current.digit1Key.wasReleasedThisFrame) StopFiring(0);
+        public void Set(WeaponSO weapon)
+        {
+            this.weapon = weapon;
+            this.rounds = weapon.maxRounds;
 
-        if (Keyboard.current.digit2Key.wasPressedThisFrame) StartFiring(1);
-        if (Keyboard.current.digit2Key.wasReleasedThisFrame) StopFiring(1);
+            this.DoesSlotHaveWeapon = true;
+        }
 
-        if (Keyboard.current.digit3Key.wasPressedThisFrame) StartFiring(2);
-        if (Keyboard.current.digit3Key.wasReleasedThisFrame) StopFiring(2);
-    }
+        public void InitializeFiring()
+        {
+            IsFiring = true;
+            EndAutomatic = false;
+        }
 
-    private void StartFiring(int weaponIndex)
-    {
+        public void EndFiring()
+        {
+            IsFiring = false;
+        }
 
-    }
+        public bool CanFire(bool firstShot)
+        {
+            return (((weapon.manual && firstShot) || (!weapon.manual && !EndAutomatic)) && (rounds-- > 0));
+        }
 
-    private void StopFiring(int weaponIndex)
-    {
+        public void FireWeapon(Vector3 muzzlePoint, Vector3 direction)
+        {
+            GameObject go = Instantiate(weapon.prefab, muzzlePoint, Quaternion.identity);
+            go.GetComponentInChildren<Rigidbody>().AddForce(direction * weapon.force, ForceMode.Impulse);
+            Destroy(go, weapon.destroyTiming);
+        }
 
-    }
+        public bool IsWeaponEmpty()
+        {
+            return (rounds == 0);
+        }
 
-    public class WeaponStatus
-    {
-        private bool weaponSet = false;
-        private bool isFiring;
-        private bool endAutomatic;
-        private int maxRounds;
-        private int rounds;
+        public void Reload()
+        {
+            rounds = weapon.maxRounds;
+        }
+
+        public float GetReloadTime()
+        {
+            return (weapon.reloadSec);
+        }
+
+        public void StopAutomaticFiring()
+        {
+            EndAutomatic = true;
+        }
     }
 
     public enum PlayerState
