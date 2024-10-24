@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1629194792359312628}
   m_Layer: 0
-  m_Name: FirePoint
+  m_Name: MuzzlePoint
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef4dc71a4041f0479a6595318cc1e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 1629194792359312628}
+  muzzlePoint: {fileID: 1629194792359312628}
   weapon: {fileID: 11400000, guid: 60852dc901a3fcb4a822920b54c4e1d6, type: 2}
 --- !u!143 &5887113813219051420
 CharacterController:

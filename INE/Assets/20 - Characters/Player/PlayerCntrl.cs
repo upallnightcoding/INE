@@ -148,13 +148,6 @@ public class PlayerCntrl : MonoBehaviour
 
     private void CheckFireWeapon()
     {
-        /*if (Keyboard.current.digit1Key.wasPressedThisFrame)
-        {
-            GameObject go = Instantiate(weapon.prefab, firePoint.transform.position, Quaternion.identity);
-            go.GetComponentInChildren<Rigidbody>().AddForce(direction * 90.0f, ForceMode.Impulse);
-            Destroy(go, 2.0f);
-        }*/
-
         if (Keyboard.current.digit1Key.wasPressedThisFrame) StartCoroutine(StartFiring(weaponSlot[0]));
         if (Keyboard.current.digit1Key.wasReleasedThisFrame) StopFiring(weaponSlot[0]);
 
@@ -246,11 +239,13 @@ public class PlayerCntrl : MonoBehaviour
 
         public void EndFiring()
         {
+            EndAutomatic = true;
             IsFiring = false;
         }
 
         public bool CanFire(bool firstShot)
         {
+            Debug.Log($"End Automatic/rounds: {EndAutomatic}/{rounds}");
             return (((weapon.manual && firstShot) || (!weapon.manual && !EndAutomatic)) && (rounds-- > 0));
         }
 
@@ -263,22 +258,26 @@ public class PlayerCntrl : MonoBehaviour
 
         public bool IsWeaponEmpty()
         {
-            return (rounds == 0);
+            Debug.Log($"Is Weapon Empty: {rounds}");
+            return (rounds <= 0);
         }
 
         public void Reload()
         {
+            Debug.Log($"Reload: {weapon.maxRounds}");
             rounds = weapon.maxRounds;
         }
 
         public float GetReloadTime()
         {
+            Debug.Log("Reload ...");
             return (weapon.reloadSec);
         }
 
         public void StopAutomaticFiring()
         {
             EndAutomatic = true;
+            Debug.Log($"StopAutmaticFiring: {EndAutomatic}");
         }
     }
 

@@ -145,6 +145,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6953157358501841278, guid: 7edf1678d44e7c4489a7d60191d79c31, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0574116a7188c654ab34fcd54a2d0ecc, type: 2}
     - target: {fileID: 8700755274080469739, guid: 7edf1678d44e7c4489a7d60191d79c31, type: 3}
       propertyPath: m_Name
       value: SM_Env_Rune_Pillar_01
