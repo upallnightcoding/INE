@@ -129,10 +129,13 @@ public class PlayerCntrl : MonoBehaviour
         return (PlayerState.FIRING);
     }
 
+    /**
+     * SetNewWeapon() - 
+     */
     private void SetNewWeapon(int slot)
     {
         weaponSlot[slot].Set(holdWeapon);
-        Debug.Log($"Drop Weapon Slot: {slot}");
+        EventManager.Instance.InvokeOnSetWeapon(slot, holdWeapon.sprite, holdWeapon.maxRounds);
     }
 
     private PlayerState PickWeaponSlot()
@@ -180,17 +183,19 @@ public class PlayerCntrl : MonoBehaviour
 
             if (weaponSlot.IsWeaponEmpty())
             {
-                //yield return new WaitForSeconds(weaponSlot.GetReloadTime());
-                //weaponSlot.Reload();
-                //EventManager.Instance.InvokeOnWeaponUpdate(slot, weaponSlot.RoundsCount());
-
                 float timing = 0.0f;
+                float reloadTime = weaponSlot.GetReloadTime();
 
-                while (timing < weaponSlot.GetReloadTime())
+                while (timing < reloadTime)
                 {
                     timing += Time.deltaTime;
+                    EventManager.Instance.InvokeOnWeaponReload(slot, timing / reloadTime);
                     yield return null;
                 }
+
+                weaponSlot.Reload();
+                int maxRounds = weaponSlot.MaxRounds;
+                EventManager.Instance.InvokeOnWeaponUpdate(slot, maxRounds, maxRounds);
             }
 
             weaponSlot.EndFiring();

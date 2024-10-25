@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Projectile 02
   prefab: {fileID: 17273363667562199, guid: 2f3888d80487a2b40a94556d08914a2b, type: 3}
+  sprite: {fileID: 21300000, guid: 269a9a7d228c93e44a22fd3c155262cb, type: 3}
   manual: 0
   force: 80
   damage: 10

@@ -9,6 +9,8 @@ public class WeaponSO : ScriptableObject
 
     public GameObject prefab;
 
+    public Sprite sprite;
+
     public bool manual = true;
 
     public float force;

@@ -17,6 +17,9 @@ public class EventManager
     public event Action<int, float> OnWeaponReload = delegate { };
     public void InvokeOnWeaponReload(int slot, float fraction) => OnWeaponReload.Invoke(slot, fraction);
 
+    public event Action<int, Sprite, int> OnSetWeapon = delegate { };
+    public void InvokeOnSetWeapon(int slot, Sprite sprite, int maxRounds) => OnSetWeapon.Invoke(slot, sprite, maxRounds);
+
     // Event Manager Singleton
     //------------------------
     public static EventManager Instance
