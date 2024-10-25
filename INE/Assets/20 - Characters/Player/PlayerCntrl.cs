@@ -148,17 +148,17 @@ public class PlayerCntrl : MonoBehaviour
 
     private void CheckFireWeapon()
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame) StartCoroutine(StartFiring(weaponSlot[0]));
+        if (Keyboard.current.digit1Key.wasPressedThisFrame) StartCoroutine(StartFiring(0, weaponSlot[0]));
         if (Keyboard.current.digit1Key.wasReleasedThisFrame) StopFiring(weaponSlot[0]);
 
-        if (Keyboard.current.digit2Key.wasPressedThisFrame) StartCoroutine(StartFiring(weaponSlot[1]));
+        if (Keyboard.current.digit2Key.wasPressedThisFrame) StartCoroutine(StartFiring(1, weaponSlot[1]));
         if (Keyboard.current.digit2Key.wasReleasedThisFrame) StopFiring(weaponSlot[1]);
 
-        if (Keyboard.current.digit3Key.wasPressedThisFrame) StartCoroutine(StartFiring(weaponSlot[2]));
+        if (Keyboard.current.digit3Key.wasPressedThisFrame) StartCoroutine(StartFiring(2, weaponSlot[2]));
         if (Keyboard.current.digit3Key.wasReleasedThisFrame) StopFiring(weaponSlot[2]);
     }
 
-    private IEnumerator StartFiring(WeaponSlot weaponSlot)
+    private IEnumerator StartFiring(int slot, WeaponSlot weaponSlot)
     {
         if (weaponSlot != null && weaponSlot.DoesSlotHaveWeapon && !weaponSlot.IsFiring)
         {
@@ -173,13 +173,24 @@ public class PlayerCntrl : MonoBehaviour
 
                 yield return new WaitForSeconds(timeBetweenRounds);
 
+                EventManager.Instance.InvokeOnWeaponUpdate(slot, weaponSlot.Rounds, weaponSlot.MaxRounds);
+
                 firstShot = false;
             }
 
             if (weaponSlot.IsWeaponEmpty())
             {
-                yield return new WaitForSeconds(weaponSlot.GetReloadTime());
-                weaponSlot.Reload();
+                //yield return new WaitForSeconds(weaponSlot.GetReloadTime());
+                //weaponSlot.Reload();
+                //EventManager.Instance.InvokeOnWeaponUpdate(slot, weaponSlot.RoundsCount());
+
+                float timing = 0.0f;
+
+                while (timing < weaponSlot.GetReloadTime())
+                {
+                    timing += Time.deltaTime;
+                    yield return null;
+                }
             }
 
             weaponSlot.EndFiring();
@@ -216,7 +227,8 @@ public class PlayerCntrl : MonoBehaviour
         public bool IsFiring { get; set; } = false;
         public bool EndAutomatic { get; set; } = true;
 
-        private int rounds;
+        public int Rounds { get; set; }
+        public int MaxRounds { get; set; }
 
         public WeaponSlot()
         {
@@ -226,7 +238,8 @@ public class PlayerCntrl : MonoBehaviour
         public void Set(WeaponSO weapon)
         {
             this.weapon = weapon;
-            this.rounds = weapon.maxRounds;
+            this.Rounds = weapon.maxRounds;
+            this.MaxRounds = weapon.maxRounds;
 
             this.DoesSlotHaveWeapon = true;
         }
@@ -245,8 +258,7 @@ public class PlayerCntrl : MonoBehaviour
 
         public bool CanFire(bool firstShot)
         {
-            Debug.Log($"End Automatic/rounds: {EndAutomatic}/{rounds}");
-            return (((weapon.manual && firstShot) || (!weapon.manual && !EndAutomatic)) && (rounds-- > 0));
+            return (((weapon.manual && firstShot) || (!weapon.manual && !EndAutomatic)) && (Rounds-- > 0));
         }
 
         public void FireWeapon(Vector3 muzzlePoint, Vector3 direction)
@@ -258,26 +270,22 @@ public class PlayerCntrl : MonoBehaviour
 
         public bool IsWeaponEmpty()
         {
-            Debug.Log($"Is Weapon Empty: {rounds}");
-            return (rounds <= 0);
+            return (Rounds <= 0);
         }
 
         public void Reload()
         {
-            Debug.Log($"Reload: {weapon.maxRounds}");
-            rounds = weapon.maxRounds;
+            Rounds = weapon.maxRounds;
         }
 
         public float GetReloadTime()
         {
-            Debug.Log("Reload ...");
             return (weapon.reloadSec);
         }
 
         public void StopAutomaticFiring()
         {
             EndAutomatic = true;
-            Debug.Log($"StopAutmaticFiring: {EndAutomatic}");
         }
     }
 
