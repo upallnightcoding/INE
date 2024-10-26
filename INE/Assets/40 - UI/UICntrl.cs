@@ -11,12 +11,29 @@ public class UICntrl : MonoBehaviour
     [SerializeField] private Image[] weaponIcon;
     [SerializeField] private Image[] weaponSliderColor;
 
+    [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject gamePlayPanel;
+
     // Start is called before the first frame update
     void Start()
     {
         EmptySlider(0);
         EmptySlider(1);
         EmptySlider(2);
+
+        MainMenuDisplay();
+    }
+
+    public void MainMenuDisplay()
+    {
+        mainMenuPanel.SetActive(true);
+        gamePlayPanel.SetActive(false);
+    }
+
+    public void GamePlayDisplay()
+    {
+        mainMenuPanel.SetActive(false);
+        gamePlayPanel.SetActive(true);
     }
 
     private void SetWeapon(int slot, Sprite sprite, int maxRounds)
