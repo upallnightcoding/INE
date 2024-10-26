@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7307933579029602280}
   - component: {fileID: 1032837038698834736}
   m_Layer: 0
-  m_Name: Rune_Blue_4
+  m_Name: Rune_Blue_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
