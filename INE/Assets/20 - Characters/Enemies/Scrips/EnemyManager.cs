@@ -5,13 +5,12 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] private EnemySO testEnemy;
     [SerializeField] private GameData gameData;
 
     // Start is called before the first frame update
     void Start()
     {
-        //SpawnOneEnemy(testEnemy, new Vector3(5.0f, 0.0f, 0.0f));
+
     }
 
     // Update is called once per frame
@@ -20,15 +19,23 @@ public class EnemyManager : MonoBehaviour
         
     }
 
-    private void Spawn()
+    public void StartEnemyManager()
     {
-        SpawnTwoEnemies(testEnemy, testEnemy);
+        SpawnOneEnemy(gameData.enemy[1], new Vector3(5.0f, 0.0f, 0.0f));
     }
 
+    private void Spawn()
+    {
+        //SpawnTwoEnemies(testEnemy, testEnemy);
+    }
+
+    /**
+     * SpawnTwoEnemies() - 
+     */
     private void SpawnTwoEnemies(EnemySO left, EnemySO right)
     {
-        float u = Random.Range(0.0f, 1.0f);
-        float w = Random.Range(0.0f, 1.0f);
+        float u = Random.Range(0.0f, 1.0f) * ((Random.Range(0, 2) == 0) ? -1.0f : 1.0f);
+        float w = Random.Range(0.0f, 1.0f) * ((Random.Range(0, 2) == 0) ? -1.0f : 1.0f);
         Vector3 direction = (new Vector3(u, 0.0f, w)).normalized;
 
         Vector3 playerPos = player.transform.position;
@@ -58,6 +65,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         GameObject go = Instantiate(enemy.prefab, position, Quaternion.identity);
+        go.GetComponent<EnemyCntrl>().SetXp(enemy.xp);
     }
 
     private void OnEnable()

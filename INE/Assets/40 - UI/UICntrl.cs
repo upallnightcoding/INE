@@ -42,8 +42,6 @@ public class UICntrl : MonoBehaviour
         xpText.text = xp.ToString();
     }
 
-    
-
     public void MainMenuDisplay()
     {
         mainMenuPanel.SetActive(true);
@@ -133,6 +131,7 @@ public class UICntrl : MonoBehaviour
         EventManager.Instance.OnWeaponUpdate += UpdateWeaponSlider;
         EventManager.Instance.OnWeaponReload += UpdateWeaponReload;
         EventManager.Instance.OnSetWeapon += SetWeapon;
+        EventManager.Instance.OnDisplayXpKills += DisplayXpKills;
     }
 
     private void OnDisable()
@@ -140,5 +139,6 @@ public class UICntrl : MonoBehaviour
         EventManager.Instance.OnWeaponUpdate -= UpdateWeaponSlider;
         EventManager.Instance.OnWeaponReload -= UpdateWeaponReload;
         EventManager.Instance.OnSetWeapon -= SetWeapon;
+        EventManager.Instance.OnDisplayXpKills -= DisplayXpKills;
     }
 }

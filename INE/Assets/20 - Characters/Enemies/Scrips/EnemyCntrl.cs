@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class EnemyCntrl : MonoBehaviour
 {
+    // Get the player reference from the hierarchy
     private GameObject player;
 
+    // Reference to the animator
     private Animator animator;
 
     float speed = 0.0f;
+    int xp = 0;
+
+    public void SetXp(int xp)
+    {
+        this.xp = xp;
+    }
+
+    public int GetXp()
+    {
+        return (xp);
+    }
 
     // Start is called before the first frame update
     void Start()

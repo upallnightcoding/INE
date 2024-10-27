@@ -618,8 +618,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 331802408}
-  - component: {fileID: 331802407}
   - component: {fileID: 331802409}
+  - component: {fileID: 331802407}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -640,7 +640,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 952807869}
-  testEnemy: {fileID: 11400000, guid: 9bb9379ad78050e4295b099f35d3f144, type: 2}
   gameData: {fileID: 11400000, guid: a85423c8ce127e04ab76123026d1f923, type: 2}
 --- !u!4 &331802408
 Transform:
@@ -670,6 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCntrl: {fileID: 907395516}
+  enemyManager: {fileID: 331802407}
 --- !u!1001 &357726568
 PrefabInstance:
   m_ObjectHideFlags: 0

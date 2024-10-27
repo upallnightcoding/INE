@@ -5,11 +5,12 @@ using UnityEngine;
 public class GameManagerCntrl : MonoBehaviour
 {
     [SerializeField] private UICntrl uiCntrl;
+    [SerializeField] private EnemyManager enemyManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        //DisplayMainMenu();
+
     }
 
     public void DisplayMainMenu()
@@ -20,5 +21,7 @@ public class GameManagerCntrl : MonoBehaviour
     public void DisplayGamePlay()
     {
         uiCntrl.GamePlayDisplay();
+
+        enemyManager.StartEnemyManager();
     }
 }

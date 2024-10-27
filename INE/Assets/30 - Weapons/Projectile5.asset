@@ -22,3 +22,4 @@ MonoBehaviour:
   reloadSec: 2
   roundsPerSec: 50
   destroyTiming: 2
+  projectilesPerClick: 4

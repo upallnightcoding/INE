@@ -15,7 +15,7 @@ public class WeaponSO : ScriptableObject
 
     public float force;
 
-    public float damage;
+    public int damage;
 
     public int maxRounds;
 
@@ -24,4 +24,6 @@ public class WeaponSO : ScriptableObject
     public float roundsPerSec;
 
     public float destroyTiming;
+
+    public int projectilesPerClick;
 }

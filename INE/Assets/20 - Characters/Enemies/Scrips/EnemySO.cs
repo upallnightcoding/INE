@@ -12,4 +12,6 @@ public class EnemySO : ScriptableObject
     public GameObject spawnPrefab;
 
     public float health;
+
+    public int xp;
 }

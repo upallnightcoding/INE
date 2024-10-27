@@ -235,6 +235,8 @@ public class PlayerCntrl : MonoBehaviour
         public int Rounds { get; set; }
         public int MaxRounds { get; set; }
 
+        private int projectilePerClick;
+
         public WeaponSlot()
         {
 
@@ -245,6 +247,7 @@ public class PlayerCntrl : MonoBehaviour
             this.weapon = weapon;
             this.Rounds = weapon.maxRounds;
             this.MaxRounds = weapon.maxRounds;
+            this.projectilePerClick = weapon.projectilesPerClick;
 
             this.DoesSlotHaveWeapon = true;
         }
@@ -263,13 +266,81 @@ public class PlayerCntrl : MonoBehaviour
 
         public bool CanFire(bool firstShot)
         {
+            int currentRounds = Rounds;
             return (((weapon.manual && firstShot) || (!weapon.manual && !EndAutomatic)) && (Rounds-- > 0));
         }
 
         public void FireWeapon(Vector3 muzzlePoint, Vector3 direction)
         {
-            GameObject go = Instantiate(weapon.prefab, muzzlePoint, Quaternion.identity);
+            switch(projectilePerClick)
+            {
+                case 1:
+                    RenderProjectile(muzzlePoint, direction, 0.0f);
+                    break;
+                case 2:
+                    Fire2Projectiles(muzzlePoint, direction);
+                    break;
+                case 3:
+                    Fire3Projectiles(muzzlePoint, direction);
+                    break;
+                case 4:
+                    Fire4Projectiles(muzzlePoint, direction);
+                    break;
+            }
+        }
+
+        /**
+         * Fire2Projectiles() - Fires projectiles in two directions based on 
+         * the muzzle point and the direction.
+         */
+        private void Fire2Projectiles(Vector3 muzzlePoint, Vector3 direction)
+        {
+            Vector3 d1 = (Vector3.Cross(direction, Vector3.up) + direction).normalized;
+            Vector3 d2 = (-Vector3.Cross(direction, Vector3.up) + direction).normalized;
+
+            RenderProjectile(muzzlePoint, d1, 0.5f);
+            RenderProjectile(muzzlePoint, d2, 0.5f);
+        }
+
+        /**
+        * Fire3Projectiles() - Fires projectiles in three directions based on 
+        * the muzzle point and the direction.
+        */
+        private void Fire3Projectiles(Vector3 muzzlePoint, Vector3 direction)
+        {
+            RenderProjectile(muzzlePoint, direction, 0.0f);
+
+            Vector3 d1 = (Vector3.Cross(direction, Vector3.up) + direction).normalized;
+            Vector3 d2 = (-Vector3.Cross(direction, Vector3.up) + direction).normalized;
+
+            RenderProjectile(muzzlePoint, d1, 0.5f);
+            RenderProjectile(muzzlePoint, d2, 0.5f);
+        }
+
+        /**
+        * Fire4Projectiles() - Fires projectiles in four directions based on 
+        * the muzzle point and the direction.
+        */
+        private void Fire4Projectiles(Vector3 muzzlePoint, Vector3 direction)
+        {
+            RenderProjectile(muzzlePoint, direction, 0.0f);
+
+            Vector3 u = Vector3.Cross(direction, Vector3.up);
+
+            Vector3 d1 = (u + direction);
+            Vector3 d2 = (-u + direction);
+
+            RenderProjectile(muzzlePoint, (u+d1).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (d1+direction).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (direction + d2).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (d2 + -u).normalized, 0.5f);
+        }
+
+        private void RenderProjectile(Vector3 startPoint, Vector3 direction, float offset)
+        {
+            GameObject go = Instantiate(weapon.prefab, startPoint + direction*offset, Quaternion.identity);
             go.GetComponentInChildren<Rigidbody>().AddForce(direction * weapon.force, ForceMode.Impulse);
+            go.GetComponent<ProjectileCntrl>().SetDamage(weapon.damage);
             Destroy(go, weapon.destroyTiming);
         }
 

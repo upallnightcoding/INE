@@ -5,6 +5,9 @@ using System;
 
 public class EventManager 
 {
+    public event Action<int> OnDisplayXpKills = delegate { };
+    public void InvokeOnDisplayXpKills(int xp) => OnDisplayXpKills.Invoke(xp);
+
     public event Action OnEnemyDestroy = delegate { };
     public void InvokeOnEnemyDestroy() => OnEnemyDestroy.Invoke();
 

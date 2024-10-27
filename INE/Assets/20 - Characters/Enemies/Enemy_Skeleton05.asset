@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42216a65f13a1f04cac4798ec80d4270, type: 3}
   m_Name: Enemy_Skeleton05
   m_EditorClassIdentifier: 
-  enemyName: Skeleton 3
+  enemyName: Skeleton 5
   prefab: {fileID: 4862036079709523068, guid: b58f96adc0a999643bb953b4d54ef228, type: 3}
   spawnPrefab: {fileID: 4937174437692674392, guid: 97dbf94517852fa4393c43ebd50d76d6, type: 3}
-  health: 30
+  health: 40
+  xp: 40
