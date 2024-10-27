@@ -14,6 +14,17 @@ public class UICntrl : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject gamePlayPanel;
 
+    [SerializeField] private TMP_Text timeText;
+    [SerializeField] private TMP_Text killsText;
+    [SerializeField] private TMP_Text xpText;
+
+    private int hours = 0;
+    private int minutes = 0;
+    private int seconds = 0;
+
+    private int kills = 0;
+    private int xp = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +34,15 @@ public class UICntrl : MonoBehaviour
 
         MainMenuDisplay();
     }
+
+    public void DisplayXpKills(int value)
+    {
+        killsText.text = (++kills).ToString();
+        xp += value;
+        xpText.text = xp.ToString();
+    }
+
+    
 
     public void MainMenuDisplay()
     {
@@ -34,6 +54,49 @@ public class UICntrl : MonoBehaviour
     {
         mainMenuPanel.SetActive(false);
         gamePlayPanel.SetActive(true);
+
+        StartCoroutine(DisplayTimer());
+    }
+
+    /**
+     * DisplayTimer() - 
+     */
+    public IEnumerator DisplayTimer()
+    {
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+
+        while(true)
+        {
+            yield return new WaitForSecondsRealtime(1.0f);
+
+            timeText.text = FormatTimer();
+        }
+    }
+
+    private string FormatTimer()
+    {
+        if (seconds == 59)
+        {
+            seconds = 0;
+
+            if (minutes == 59)
+            {
+                minutes = 0;
+                ++hours;
+            }
+            else
+            {
+                minutes++;
+            }
+        }
+        else
+        {
+            seconds++;
+        }
+
+        return (hours.ToString("D2") + ":" + minutes.ToString("D2") + ":" + seconds.ToString("D2"));
     }
 
     private void SetWeapon(int slot, Sprite sprite, int maxRounds)
