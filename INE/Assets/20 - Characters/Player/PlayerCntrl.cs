@@ -16,6 +16,8 @@ public class PlayerCntrl : MonoBehaviour
 
     private Vector3 direction;
 
+    private bool runGamePlay = false;
+
     private Vector2 moveInput;
     private Vector3 moveDirection;
     private Vector3 target;
@@ -43,9 +45,22 @@ public class PlayerCntrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (runGamePlay)
+        {
+            GamePlay();
+        }
+    }
+
+    public void StartGamePlay()
+    {
+        runGamePlay = true;
+    }
+
+    private void GamePlay()
+    {
         ClickAndMove(Time.deltaTime);
 
-        switch(playerState)
+        switch (playerState)
         {
             case PlayerState.FIRING:
                 CheckFireWeapon();
@@ -78,6 +93,8 @@ public class PlayerCntrl : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 target = new Vector3(hit.point.x, 0.0f, hit.point.z);
+
+                Debug.Log($"Tag: {hit.transform.gameObject.tag}");
 
                 if (Vector3.Distance(transform.position, target) > 0.3f)
                 {

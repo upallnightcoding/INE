@@ -18,6 +18,17 @@ public class UICntrl : MonoBehaviour
     [SerializeField] private TMP_Text killsText;
     [SerializeField] private TMP_Text xpText;
 
+    [SerializeField] private GameObject histComponent;
+    [SerializeField] private TMP_Text hintText;
+
+    private int whichHint = -1;
+
+    private string[] hints =
+    {
+        "You need to find a weapon, run over a rune to get one.",
+        "Weapons are fired by pressing 1, 2, or 3 on the keyboard."
+    };
+
     private int hours = 0;
     private int minutes = 0;
     private int seconds = 0;
@@ -33,6 +44,28 @@ public class UICntrl : MonoBehaviour
         EmptySlider(2);
 
         MainMenuDisplay();
+    }
+
+    public void DisplayHint()
+    {
+        if (whichHint == -1)
+        {
+            whichHint = 0;
+        } else
+        {
+            whichHint = Random.Range(0, hints.Length);
+        }
+
+        hintText.text = hints[whichHint];
+
+        StartCoroutine(DisplayHintComponent());
+    }
+
+    private IEnumerator DisplayHintComponent()
+    {
+        histComponent.SetActive(true);
+        yield return new WaitForSecondsRealtime(5.0f);
+        histComponent.SetActive(false);
     }
 
     public void DisplayXpKills(int value)

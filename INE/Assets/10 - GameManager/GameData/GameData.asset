@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4e2dd4beba2db4b96c38db4a6250b0, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
+  cameraDamping: 1
   enemy:
   - {fileID: 11400000, guid: 9bb9379ad78050e4295b099f35d3f144, type: 2}
   - {fileID: 11400000, guid: 091687d251dd82f42bcb6a96e261e787, type: 2}
