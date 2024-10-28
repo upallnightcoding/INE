@@ -26,6 +26,10 @@ public class PlayerCntrl : MonoBehaviour
 
     private PlayerState playerState = PlayerState.FIRING;
 
+    public void StartGamePlay() => runGamePlay = true;
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,13 +55,9 @@ public class PlayerCntrl : MonoBehaviour
         }
     }
 
-    public void StartGamePlay()
-    {
-        runGamePlay = true;
-    }
-
     private void GamePlay()
     {
+        ClickCommands();
         ClickAndMove(Time.deltaTime);
 
         switch (playerState)
@@ -74,6 +74,26 @@ public class PlayerCntrl : MonoBehaviour
                 playerState = DropWeapon(playerState);
                 break;
         }
+    }
+
+    private void ClickCommands()
+    {
+        if(Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            EndGamePlay();
+        }
+
+        if (Keyboard.current.hKey.wasPressedThisFrame)
+        {
+            EventManager.Instance.InvokeOnHintDisplay();
+        }
+    }
+
+    private void EndGamePlay()
+    {
+        runGamePlay = false;
+
+        EventManager.Instance.InvokeOnDisplayMainMenu();
     }
 
     public void Pickup(WeaponSO weapon)
@@ -93,8 +113,6 @@ public class PlayerCntrl : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 target = new Vector3(hit.point.x, 0.0f, hit.point.z);
-
-                Debug.Log($"Tag: {hit.transform.gameObject.tag}");
 
                 if (Vector3.Distance(transform.position, target) > 0.3f)
                 {
@@ -128,6 +146,11 @@ public class PlayerCntrl : MonoBehaviour
     /*** Firing Weapon ***/
     /*********************/
 
+    /**
+     * DropWeapon() - When a weapon has been taken from a rune, it must be
+     * bound to a "1", "2" or "3" key.  After binding the key can then be
+     * used as a trigger for shooting.
+     */
     private PlayerState DropWeapon(PlayerState state)
     {
         switch(state)
@@ -303,6 +326,9 @@ public class PlayerCntrl : MonoBehaviour
                 case 4:
                     Fire4Projectiles(muzzlePoint, direction);
                     break;
+                case 5:
+                    Fire5Projectiles(muzzlePoint, direction);
+                    break;
             }
         }
 
@@ -340,6 +366,23 @@ public class PlayerCntrl : MonoBehaviour
         */
         private void Fire4Projectiles(Vector3 muzzlePoint, Vector3 direction)
         {
+            Vector3 u = Vector3.Cross(direction, Vector3.up);
+
+            Vector3 d1 = (u + direction);
+            Vector3 d2 = (-u + direction);
+
+            RenderProjectile(muzzlePoint, (d1 +  u).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (d1 + direction).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (d2 + -u).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (d2 + direction).normalized, 0.5f);
+        }
+
+        /**
+       * Fire4Projectiles() - Fires projectiles in four directions based on 
+       * the muzzle point and the direction.
+       */
+        private void Fire5Projectiles(Vector3 muzzlePoint, Vector3 direction)
+        {
             RenderProjectile(muzzlePoint, direction, 0.0f);
 
             Vector3 u = Vector3.Cross(direction, Vector3.up);
@@ -347,8 +390,8 @@ public class PlayerCntrl : MonoBehaviour
             Vector3 d1 = (u + direction);
             Vector3 d2 = (-u + direction);
 
-            RenderProjectile(muzzlePoint, (u+d1).normalized, 0.5f);
-            RenderProjectile(muzzlePoint, (d1+direction).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (u + d1).normalized, 0.5f);
+            RenderProjectile(muzzlePoint, (d1 + direction).normalized, 0.5f);
             RenderProjectile(muzzlePoint, (direction + d2).normalized, 0.5f);
             RenderProjectile(muzzlePoint, (d2 + -u).normalized, 0.5f);
         }
@@ -357,7 +400,7 @@ public class PlayerCntrl : MonoBehaviour
         {
             GameObject go = Instantiate(weapon.prefab, startPoint + direction*offset, Quaternion.identity);
             go.GetComponentInChildren<Rigidbody>().AddForce(direction * weapon.force, ForceMode.Impulse);
-            go.GetComponent<ProjectileCntrl>().SetDamage(weapon.damage);
+            go.GetComponent<ProjectileCntrl>().SetDamage(weapon.damage, weapon.destroyPrefab);
             Destroy(go, weapon.destroyTiming);
         }
 

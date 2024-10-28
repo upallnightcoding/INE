@@ -14,4 +14,9 @@ public class GameData : ScriptableObject
     [Space]
     [Header("Weapons Attributes ...")]
     public float weaponsSpinning = 30.0f;
+
+    [Header("Environment Tiles ...")]
+    public GameObject[] runeTiles;
+    public GameObject[] rails;
+    public GameObject basicFloorTile;
 }

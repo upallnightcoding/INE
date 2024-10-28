@@ -61,7 +61,8 @@ public class EnemyManager : MonoBehaviour
     {
         if (enemy.spawnPrefab != null)
         {
-            Instantiate(enemy.spawnPrefab, position, Quaternion.identity);
+            GameObject spawn = Instantiate(enemy.spawnPrefab, position, Quaternion.identity);
+            Destroy(spawn, 3.0f);
         }
 
         GameObject go = Instantiate(enemy.prefab, position, Quaternion.identity);

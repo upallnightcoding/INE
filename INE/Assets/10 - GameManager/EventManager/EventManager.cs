@@ -5,6 +5,12 @@ using System;
 
 public class EventManager 
 {
+    public event Action OnHintDisplay = delegate { };
+    public void InvokeOnHintDisplay() => OnHintDisplay.Invoke();
+
+    public event Action OnDisplayMainMenu = delegate { };
+    public void InvokeOnDisplayMainMenu() => OnDisplayMainMenu.Invoke();
+
     public event Action<int> OnDisplayXpKills = delegate { };
     public void InvokeOnDisplayXpKills(int xp) => OnDisplayXpKills.Invoke(xp);
 

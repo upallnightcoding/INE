@@ -20,3 +20,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ff2e6133ca8f2da4bbbb81d8717eebd9, type: 2}
   - {fileID: 11400000, guid: f66ca1ac029cab647a4f06605664c41b, type: 2}
   weaponsSpinning: 40
+  runeTiles:
+  - {fileID: 5509302198013080162, guid: 60814099a3c6b9b48afaa3ca1473088a, type: 3}
+  - {fileID: 4618120954544831244, guid: 8090cad95670a5b458bf26f3b4d257c8, type: 3}
+  - {fileID: 480590531495901412, guid: af879fff5a989634281b181265846fea, type: 3}
+  - {fileID: 3873425677277558742, guid: a2290fd7d54795947b70f7bcf70b5c53, type: 3}
+  - {fileID: 3778408052952217315, guid: 1b2d6b30710af6047a947e874b624401, type: 3}
+  rails:
+  - {fileID: 7243488146920137970, guid: 223b34bad56649b44b39e26041f838d6, type: 3}
+  - {fileID: 4522672211469109173, guid: 3cf3861f92b4faa44bdda7411603bd4e, type: 3}
+  - {fileID: 3070406009334606810, guid: 31be293faededb444a9de4bb31eed0a3, type: 3}
+  basicFloorTile: {fileID: 7128269384667385852, guid: 25f9c4bdda72baf448371a13bb99554a, type: 3}

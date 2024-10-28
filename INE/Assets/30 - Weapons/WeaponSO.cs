@@ -26,4 +26,6 @@ public class WeaponSO : ScriptableObject
     public float destroyTiming;
 
     public int projectilesPerClick;
+
+    public GameObject destroyPrefab;
 }

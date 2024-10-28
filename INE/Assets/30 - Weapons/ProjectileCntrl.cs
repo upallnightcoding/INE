@@ -7,9 +7,12 @@ public class ProjectileCntrl : MonoBehaviour
     // Amount of damage created by the projectile
     private int damage = 0;
 
-    public void SetDamage(int damage)
+    private GameObject destroyPrefab;
+
+    public void SetDamage(int damage, GameObject destroyPrefab)
     {
         this.damage = damage;
+        this.destroyPrefab = destroyPrefab;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,6 +23,12 @@ public class ProjectileCntrl : MonoBehaviour
 
             if (takeDamageCntrl.TakeDamage(damage))
             {
+                if (destroyPrefab != null)
+                {
+                    GameObject explode = Instantiate(destroyPrefab, transform.position, Quaternion.identity);
+                    Destroy(explode, 3.0f);
+                }
+
                 Destroy(other.gameObject);
 
                 EventManager.Instance.InvokeOnEnemyDestroy();

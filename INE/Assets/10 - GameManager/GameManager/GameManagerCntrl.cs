@@ -27,4 +27,20 @@ public class GameManagerCntrl : MonoBehaviour
 
         enemyManager.StartEnemyManager();
     }
+
+    public void QuitGamePlay()
+    {
+        Debug.Log("Quiting Game ...");
+        Application.Quit();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.OnDisplayMainMenu -= DisplayMainMenu;
+    }
+
+    private void OnEnable()
+    {
+        EventManager.Instance.OnDisplayMainMenu += DisplayMainMenu;
+    }
 }

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e323f9826585040b9e3e1d4b9a1933, type: 3}
   m_Name: Projectile3
   m_EditorClassIdentifier: 
-  weaponName: Projectile 01
+  weaponName: Projectile 03
   prefab: {fileID: 17273363667562199, guid: 16fe534faa9361a46a74cc88f67b93d7, type: 3}
   sprite: {fileID: 21300000, guid: 97e8bf4ef8d31dd4caca822de797f9a6, type: 3}
-  manual: 1
+  manual: 0
   force: 80
   damage: 10
   maxRounds: 10
@@ -23,3 +23,4 @@ MonoBehaviour:
   roundsPerSec: 5
   destroyTiming: 2
   projectilesPerClick: 4
+  destroyPrefab: {fileID: 2172539898617382547, guid: 7d04eddf4e0f9e74b975959a6550198c, type: 3}

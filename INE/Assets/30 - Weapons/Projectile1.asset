@@ -15,11 +15,12 @@ MonoBehaviour:
   weaponName: Projectile 01
   prefab: {fileID: 17273363667562199, guid: 377b9448db09f794bb6ad33092237343, type: 3}
   sprite: {fileID: 21300000, guid: 7edf2eefe77a12e4f9e11bcb2cc9de17, type: 3}
-  manual: 0
+  manual: 1
   force: 80
   damage: 10
   maxRounds: 30
   reloadSec: 2
   roundsPerSec: 50
   destroyTiming: 2
-  projectilesPerClick: 4
+  projectilesPerClick: 1
+  destroyPrefab: {fileID: 2172539898617382547, guid: 7d04eddf4e0f9e74b975959a6550198c, type: 3}

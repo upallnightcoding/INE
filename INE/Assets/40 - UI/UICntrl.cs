@@ -25,8 +25,12 @@ public class UICntrl : MonoBehaviour
 
     private string[] hints =
     {
-        "You need to find a weapon, run over a rune to get one.",
-        "Weapons are fired by pressing 1, 2, or 3 on the keyboard."
+        "You'll need to find a weapon, run over a rune to get one.",
+        "Once you get a weapon, click '1', '2' or '3' to use as a weapon trigger.",
+        "Weapons have different capabilities, use them and see.",
+        "With each kill of a skeleton, you gain experience points.",
+        "Click and the player will stop at the click position.", 
+        "Draw the mouse and the player will follow the cursor."
     };
 
     private int hours = 0;
@@ -165,6 +169,7 @@ public class UICntrl : MonoBehaviour
         EventManager.Instance.OnWeaponReload += UpdateWeaponReload;
         EventManager.Instance.OnSetWeapon += SetWeapon;
         EventManager.Instance.OnDisplayXpKills += DisplayXpKills;
+        EventManager.Instance.OnHintDisplay += DisplayHint;
     }
 
     private void OnDisable()
@@ -173,5 +178,6 @@ public class UICntrl : MonoBehaviour
         EventManager.Instance.OnWeaponReload -= UpdateWeaponReload;
         EventManager.Instance.OnSetWeapon -= SetWeapon;
         EventManager.Instance.OnDisplayXpKills -= DisplayXpKills;
+        EventManager.Instance.OnHintDisplay -= DisplayHint;
     }
 }
