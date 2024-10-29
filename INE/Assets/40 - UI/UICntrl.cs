@@ -13,6 +13,7 @@ public class UICntrl : MonoBehaviour
 
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject gamePlayPanel;
+    [SerializeField] private GameObject directionPanel;
 
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text killsText;
@@ -83,12 +84,21 @@ public class UICntrl : MonoBehaviour
     {
         mainMenuPanel.SetActive(true);
         gamePlayPanel.SetActive(false);
+        directionPanel.SetActive(false);
+    }
+
+    public void DirectionDisplay()
+    {
+        mainMenuPanel.SetActive(false);
+        gamePlayPanel.SetActive(false);
+        directionPanel.SetActive(true);
     }
 
     public void GamePlayDisplay()
     {
         mainMenuPanel.SetActive(false);
         gamePlayPanel.SetActive(true);
+        directionPanel.SetActive(false);
 
         StartCoroutine(DisplayTimer());
     }

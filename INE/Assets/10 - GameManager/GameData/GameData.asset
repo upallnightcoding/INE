@@ -31,3 +31,23 @@ MonoBehaviour:
   - {fileID: 4522672211469109173, guid: 3cf3861f92b4faa44bdda7411603bd4e, type: 3}
   - {fileID: 3070406009334606810, guid: 31be293faededb444a9de4bb31eed0a3, type: 3}
   basicFloorTile: {fileID: 7128269384667385852, guid: 25f9c4bdda72baf448371a13bb99554a, type: 3}
+  grassTiles:
+  - {fileID: 2525889829368448466, guid: 51e7d4e54e48d7747876335a3faf8c53, type: 3}
+  - {fileID: 4184485443294881992, guid: 60770dc1e95a57141a1e94263067aece, type: 3}
+  - {fileID: 7231151413490312082, guid: 143a7a1329b26224b971780f80c43567, type: 3}
+  mushRoomTiles:
+  - {fileID: 8355462217450320823, guid: fbd3223534d99e84abdfa5fb871cc45b, type: 3}
+  - {fileID: 8559710143800768969, guid: 3345fb27580aa9148828225441454239, type: 3}
+  - {fileID: 1674214033608563910, guid: 73f082b1193c70d45a30520b3900d5d0, type: 3}
+  - {fileID: 4439245403698937922, guid: dabb8569a419be945837208145e646d2, type: 3}
+  - {fileID: 2985112436484283199, guid: b7f7cd4c00edb1b42afc7a10b31ecee2, type: 3}
+  - {fileID: 2932409786644823545, guid: 5157bd18d3860ea4c93a0c50b8f4d7a0, type: 3}
+  - {fileID: 1011971792086053650, guid: b8864af5445505942bb9f4eedb668b68, type: 3}
+  statueTiles:
+  - {fileID: 3022445067985975402, guid: 4bbdd93f8a446074d979e7aa4ddef535, type: 3}
+  - {fileID: 8581263774519062943, guid: fd9062997641b814ea9893a413dbd67a, type: 3}
+  - {fileID: 6015955213851602991, guid: 5376473cc36ca3d43b265c43be36c708, type: 3}
+  - {fileID: 3881079581843900089, guid: ce267e25aba5f7d4392d9ac2f1a6f314, type: 3}
+  nGrassTiles: 300
+  nMushRooms: 30
+  nStatueTiles: 10

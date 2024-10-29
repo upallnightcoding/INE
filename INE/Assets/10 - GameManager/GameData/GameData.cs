@@ -19,4 +19,11 @@ public class GameData : ScriptableObject
     public GameObject[] runeTiles;
     public GameObject[] rails;
     public GameObject basicFloorTile;
+    public GameObject[] grassTiles;
+    public GameObject[] mushRoomTiles;
+    public GameObject[] statueTiles;
+
+    public int nGrassTiles = 125;
+    public int nMushRooms = 10;
+    public int nStatueTiles = 5;
 }

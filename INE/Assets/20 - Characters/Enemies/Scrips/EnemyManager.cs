@@ -21,18 +21,18 @@ public class EnemyManager : MonoBehaviour
 
     public void StartEnemyManager()
     {
-        SpawnOneEnemy(gameData.enemy[1], new Vector3(5.0f, 0.0f, 0.0f));
+        SpawnOneEnemy(PickEnemy(), new Vector3(5.0f, 0.0f, 0.0f));
     }
 
     private void Spawn()
     {
-        //SpawnTwoEnemies(testEnemy, testEnemy);
+        SpawnTwoEnemies();
     }
 
     /**
      * SpawnTwoEnemies() - 
      */
-    private void SpawnTwoEnemies(EnemySO left, EnemySO right)
+    private void SpawnTwoEnemies()
     {
         float u = Random.Range(0.0f, 1.0f) * ((Random.Range(0, 2) == 0) ? -1.0f : 1.0f);
         float w = Random.Range(0.0f, 1.0f) * ((Random.Range(0, 2) == 0) ? -1.0f : 1.0f);

@@ -5,6 +5,9 @@ using System;
 
 public class EventManager 
 {
+    public event Action OnEndGame = delegate { };
+    public void InvokeOnEndGame() => OnEndGame.Invoke();
+
     public event Action OnHintDisplay = delegate { };
     public void InvokeOnHintDisplay() => OnHintDisplay.Invoke();
 

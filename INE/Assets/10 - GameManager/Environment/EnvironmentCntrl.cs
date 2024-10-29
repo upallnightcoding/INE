@@ -13,7 +13,7 @@ public class EnvironmentCntrl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        floorTile = new GameObject[25, 25];
+        floorTile = new GameObject[size, size];
 
         for (int y = 0; y < size; y++)
         {
@@ -70,16 +70,51 @@ public class EnvironmentCntrl : MonoBehaviour
                 floorTile[x, y].SetActive(false);
             } 
         }
+
+        for (int i = 0; i < gameData.nGrassTiles; i++)
+        {
+            int n = Random.Range(0, gameData.grassTiles.Length);
+            float x = Random.Range(-31.25f, 31.25f);
+            float y = Random.Range(-31.25f, 31.25f);
+
+            Instantiate(gameData.grassTiles[n], new Vector3(x, 0.0f, y), Quaternion.identity);
+        }
+
+        for (int i = 0; i < gameData.nMushRooms; i++) 
+        {
+            int n = Random.Range(0, gameData.mushRoomTiles.Length);
+            float x = Random.Range(-31.25f, 31.25f);
+            float y = Random.Range(-31.25f, 31.25f);
+
+            Vector3 position = new Vector3(x, 0.0f, y);
+
+            Instantiate(gameData.mushRoomTiles[n], position, Quaternion.identity);
+
+            for (int g = 0; g < 10; g++)
+            {
+                int m = Random.Range(0, gameData.grassTiles.Length);
+
+                Vector2 pos = Random.insideUnitCircle * 2.0f;
+                Debug.Log($"Pos: {pos}");
+                Vector3 posOffset = new Vector3(position.x + pos.x, 0.0f, position.z + pos.y);
+
+                Instantiate(gameData.grassTiles[m], posOffset, Quaternion.identity);
+            }
+        }
+
+        for (int i = 0; i < gameData.nStatueTiles; i++)
+        {
+            int n = Random.Range(0, gameData.statueTiles.Length);
+            float x = Random.Range(-31.25f, 31.25f);
+            float y = Random.Range(-31.25f, 31.25f);
+
+            GameObject statue = Instantiate(gameData.statueTiles[n], new Vector3(x, 0.0f, y), Quaternion.identity);
+            statue.transform.Rotate(new Vector3(0.0f, Random.Range(0f, 180.0f), 0.0f));
+        }
     }
 
     private int PickaRail()
     {
         return (Random.Range(0, gameData.rails.Length));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5645229178801386173}
   - component: {fileID: 6061890622497180569}
   - component: {fileID: 5199025385319885724}
+  - component: {fileID: 3991656838461499438}
   m_Layer: 0
   m_Name: Enemy_Skeleton01
   m_TagString: Untagged
@@ -80,6 +81,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.1146336, y: 1.9570168, z: 1}
   m_Center: {x: 0.007607162, y: 0.91652685, z: 0}
+--- !u!114 &3991656838461499438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4469960368469968848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7806b89ce3481948a8dd8afe5e1ead7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1702718437521745141
 PrefabInstance:
   m_ObjectHideFlags: 0

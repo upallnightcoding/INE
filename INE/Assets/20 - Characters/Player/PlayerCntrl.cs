@@ -93,6 +93,7 @@ public class PlayerCntrl : MonoBehaviour
     {
         runGamePlay = false;
 
+        EventManager.Instance.InvokeOnEndGame();
         EventManager.Instance.InvokeOnDisplayMainMenu();
     }
 
